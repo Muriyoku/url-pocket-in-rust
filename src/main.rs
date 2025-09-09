@@ -1,0 +1,52 @@
+use std::{env};
+
+use url_pocket_in_rust::{save_url, show_url};
+
+fn main() {
+    let args: Vec<String> = env::args().collect();
+    let config: Config = configuration(&args);
+
+    if args[1] == "save" {
+        match save_url(config.url, config.url_type, config.desc) {
+            Ok(_) => println!("Url Saved Successfully ✅"),
+            Err(e) => eprintln!("Url was not saved {}", e),
+        }
+    } else if args[1] == "show" {
+        match show_url(config.url_type) {
+            Ok(_) => println!("All Url from {} showed✅", args[2]),
+            Err(e) => eprintln!("It's not possible to show the urls {}", e),
+        }
+    }
+}
+
+struct Config {
+    url_type: String, 
+    desc: String, 
+    url: String, 
+}
+
+impl Config {
+    fn new() -> Config {
+        return Config { 
+            url_type: String::new(), 
+            desc: String::from("No Description added"), 
+            url: String::new() 
+        };
+    }
+}
+
+fn configuration(configs: &Vec<String>) -> Config {
+    let mut configuration = Config::new();
+
+    if configs[1] == "show" {
+        configuration.url_type = configs[2].clone().to_string();
+    } 
+     
+    if configs[1] == "save" {
+        configuration.url_type = configs.get(2).cloned().unwrap_or_default();
+        configuration.url = configs.get(3).cloned().unwrap_or_default();
+        configuration.desc = configs.get(4).cloned().unwrap_or_default();
+    }
+
+    return configuration;
+}
