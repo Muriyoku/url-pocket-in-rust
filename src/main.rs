@@ -1,5 +1,4 @@
 use std::{env};
-
 use url_pocket_in_rust::{save_url, show_url};
 
 fn main() {
@@ -16,6 +15,13 @@ fn main() {
             Ok(_) => println!("All Url from {} showed✅", args[2]),
             Err(e) => eprintln!("It's not possible to show the urls {}", e),
         }
+    } else if args[1] == "help" {
+        const SRC_URL: &str = "https://github.com/Muriyoku/url-pocket-in-rust";
+
+        println!("All availables commands:\n");
+        println!("show -> show all urls from a pocket");
+        println!("save -> save a url on a pocket\n");
+        println!("more information in: {}", SRC_URL)
     }
 }
 
