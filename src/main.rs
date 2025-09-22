@@ -1,5 +1,6 @@
 use std::{env};
 use url_pocket_in_rust::{save_url, show_url};
+use colored::*;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -17,11 +18,19 @@ fn main() {
         }
     } else if args[1] == "help" {
         const SRC_URL: &str = "https://github.com/Muriyoku/url-pocket-in-rust";
+        
+        let cli_commands: [&'static str; 2] = [
+            "cargo run show -> show all urls from a pocket",
+            "cargo run save -> save a url on a pocket\n"
+        ];
 
         println!("All availables commands:\n");
-        println!("show -> show all urls from a pocket");
-        println!("save -> save a url on a pocket\n");
-        println!("more information in: {}", SRC_URL)
+        
+        for cli_command in cli_commands {
+            println!("{}", cli_command);
+        }
+
+        println!("more information in: {}", SRC_URL.bright_blue())
     }
 }
 
